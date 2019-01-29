@@ -16,16 +16,37 @@ public class URLReader {
         System.out.println(google.getQuery());
         System.out.println(google.getFile());
         System.out.println(google.getRef());
-        /*try (BufferedReader reader
-                     = new BufferedReader(new InputStreamReader(google.openStream()))) {
+
+        Scanner input = new Scanner(System.in);  // Reading from System.in
+        System.out.println("Enter a url: ");
+        String userInput = input.nextLine(); // Scans the next token of the input as an int.
+
+        URL userURL = new URL(userInput);
+        //once finished
+        input.close();
+
+        try (BufferedReader reader
+                     = new BufferedReader(new InputStreamReader(userURL.openStream()))) {
             String inputLine = null;
+            String fileContent="";
             while ((inputLine = reader.readLine()) != null) {
-                 System.out.println(inputLine);
+                fileContent = fileContent + inputLine + "\n";
+
             }
+            usingBufferedWritter(fileContent);
         } catch (IOException x) {
             System.err.println(x);
-        }*/
+        }
 
+    }
+
+    public static void usingBufferedWritter(String fileContent) throws IOException
+    {
+
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter("./urlInfo.html"));
+        writer.write(fileContent);
+        writer.close();
     }
 
 }
