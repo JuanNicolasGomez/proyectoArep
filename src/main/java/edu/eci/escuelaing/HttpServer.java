@@ -48,7 +48,7 @@ public class HttpServer {
                     + "</head>\n"
                     + "<body>\n"
                     + "<h1>Mi propio mensaje</h1>\n"
-                    + "<img src=" + "/home/2120656/Documents/hola.png" + ">\n"
+                    + "<img src=" + "hola.png" + "/>\n"
                     + "</body>\n"
                     + "</html>\n" + inputLine;
             out.println(outputLine);
