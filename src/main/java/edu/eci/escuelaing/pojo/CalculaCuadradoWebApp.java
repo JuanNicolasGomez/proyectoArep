@@ -19,7 +19,7 @@ public class CalculaCuadradoWebApp {
                 + "<title>Title of the document</title>\n"
                 + "</head>\n"
                 + "<body>\n"
-                + "<h1>Calcular cuadrado</h1>\n"
+                + "<h1>Calcular cuadrado de " + a + "</h1>\n"
                 + "<h2>Resultado: " + result + "</h2>"
                 + "</body>\n"
                 + "</html>\n";
