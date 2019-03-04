@@ -1,4 +1,5 @@
 edu/eci/escuelaing/HttpServer.class
 edu/eci/escuelaing/pojo/CalculaCuadradoWebApp.class
 edu/eci/escuelaing/annotations/Webapp.class
+edu/eci/escuelaing/pojo/ImageWebApp.class
 edu/eci/escuelaing/AnnotationHandler.class
