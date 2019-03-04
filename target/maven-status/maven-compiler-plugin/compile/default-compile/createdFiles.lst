@@ -1,4 +1,4 @@
-edu/eci/escuelaing/URLReader.class
 edu/eci/escuelaing/HttpServer.class
-edu/eci/escuelaing/EchoServer.class
-edu/eci/escuelaing/EchoClient.class
+edu/eci/escuelaing/pojo/CalculaCuadradoWebApp.class
+edu/eci/escuelaing/annotations/Webapp.class
+edu/eci/escuelaing/AnnotationHandler.class

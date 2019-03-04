@@ -1,5 +1,9 @@
 package edu.eci.escuelaing;
 
+import edu.eci.escuelaing.pojo.CalculaCuadradoWebApp;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.net.*;
 import java.io.*;
 public class HttpServer {
@@ -21,40 +25,63 @@ public class HttpServer {
                 System.err.println("Accept failed.");
                 System.exit(1);
             }
+            try {
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(
+                                clientSocket.getInputStream()));
+                String inputLine, outputLine = "";
 
 
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(
-                            clientSocket.getInputStream()));
-            String inputLine, outputLine;
-
-
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println("Received: " + inputLine);
-                if (!in.ready()) {
-                    break;
+                if ((inputLine = in.readLine()) != null) {
+                    System.out.println("Received: " + inputLine);
                 }
+
+                String[] tempArray = inputLine.split(" ");
+
+
+                if (tempArray[1].equals("/")) {
+                    outputLine = "HTTP/1.1 200 OK\r\n"
+                            + "Content-Type: text/html\r\n"
+                            + "\r\n"
+                            + "<!DOCTYPE html>\n"
+                            + "<html>\n"
+                            + "<head>\n"
+                            + "<meta charset=\"UTF-8\">\n"
+                            + "<title>Title of the document</title>\n"
+                            + "</head>\n"
+                            + "<body>\n"
+                            + "<h1>Home Page</h1>\n"
+                            + "<h2>Try out another route: /cuadrado:45, /hola.png</h2>"
+                            + "</body>\n"
+                            + "</html>\n";
+
+                }
+                else if (tempArray[1].contains("hola.png")) {
+                    out.write("HTTP/1.1 200 OK");
+                    out.println("Content-Type: image/png");
+                    out.println();
+                    BufferedImage image = ImageIO.read(new File("." + tempArray[1]));
+                    ImageIO.write(image, "PNG", clientSocket.getOutputStream());
+                }else if (tempArray[1].contains("/cuadrado")){
+                    String param = tempArray[1].split(":")[1];
+                    AnnotationHandler annHandler = new AnnotationHandler();
+                    outputLine = annHandler.handle(CalculaCuadradoWebApp.class,param);
+
+
+                }
+
+
+                out.println(outputLine);
+                out.close();
+                in.close();
+                clientSocket.close();
+                //serverSocket.close();
+            }catch(Exception e){
+
+                e.printStackTrace();
             }
 
-            outputLine = "HTTP/1.1 200 OK\r\n"
-                    + "Content-Type: text/html\r\n"
-                    + "\r\n"
-                    + "<!DOCTYPE html>\n"
-                    + "<html>\n"
-                    + "<head>\n"
-                    + "<meta charset=\"UTF-8\">\n"
-                    + "<title>Title of the document</title>\n"
-                    + "</head>\n"
-                    + "<body>\n"
-                    + "<h1>Mi propio mensaje</h1>\n"
-                    + "<img src=" + "hola.png" + "/>\n"
-                    + "</body>\n"
-                    + "</html>\n" + inputLine;
-            out.println(outputLine);
-            out.close();
-            in.close();
-            clientSocket.close();
             serverSocket.close();
         }
     }
